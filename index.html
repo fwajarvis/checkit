@@ -1186,9 +1186,8 @@ function removeImage() {
 
 let chatHistory = [];
 
-// ⚠️ Buraya Google AI Studio'dan aldığınız key'i yapıştırın
-const GEMINI_API_KEY = 'AIzaSyDp1gJnzSxEwH3zsuvpbLzQwQ-UP4CxOw4';
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+const OPENROUTER_KEY = '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';
+const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 async function sendMessage() {
   const input = document.getElementById('chat-input');
@@ -1210,18 +1209,23 @@ async function sendMessage() {
   typing.classList.add('show');
   scrollMessages();
 
-  // Gemini mesaj formatı
-  const parts = [];
+  // Mesaj içeriği oluştur
+  let userContent;
   if (hasImage) {
-    parts.push({ inline_data: { mime_type: imgType, data: imgB64 } });
+    userContent = [
+      { type: 'image_url', image_url: { url: `data:${imgType};base64,${imgB64}` } },
+      { type: 'text', text: text || 'Bu mesajı/görseli incelemenizi istiyorum. Risk değerlendirmesi yapar mısınız?' }
+    ];
+  } else {
+    userContent = text;
   }
-  parts.push({ text: text || 'Bu mesajı/görseli incelemenizi istiyorum. Risk değerlendirmesi yapar mısınız?' });
 
-  // Geçmiş konuşmaları Gemini formatına çevir
-  const geminiHistory = chatHistory.map(m => ({
-    role: m.role === 'assistant' ? 'model' : 'user',
-    parts: [{ text: typeof m.content === 'string' ? m.content : m.content }]
-  }));
+  // Geçmiş + yeni mesaj
+  const messages = [
+    { role: 'system', content: SYSTEM_PROMPT },
+    ...chatHistory,
+    { role: 'user', content: userContent }
+  ];
 
   chatHistory.push({
     role: 'user',
@@ -1229,21 +1233,23 @@ async function sendMessage() {
   });
 
   try {
-    const response = await fetch(GEMINI_URL, {
+    const response = await fetch(OPENROUTER_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${OPENROUTER_KEY}`,
+        'HTTP-Referer': 'https://checkit-beryl.vercel.app',
+        'X-Title': 'Dolandirildim Guvenlik Danismani'
+      },
       body: JSON.stringify({
-        system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-        contents: [
-          ...geminiHistory,
-          { role: 'user', parts }
-        ],
-        generationConfig: { maxOutputTokens: 1000 }
+        model: 'meta-llama/llama-3.3-70b-instruct:free',
+        messages,
+        max_tokens: 1000
       })
     });
 
     const data = await response.json();
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text
+    const reply = data.choices?.[0]?.message?.content
       || 'Şu an yanıt veremiyorum, lütfen tekrar deneyin.';
 
     chatHistory.push({ role: 'assistant', content: reply });
