@@ -1186,9 +1186,6 @@ function removeImage() {
 
 let chatHistory = [];
 
-const OPENROUTER_KEY = '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';
-const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
-
 async function sendMessage() {
   const input = document.getElementById('chat-input');
   const text = input.value.trim();
@@ -1209,7 +1206,6 @@ async function sendMessage() {
   typing.classList.add('show');
   scrollMessages();
 
-  // Mesaj içeriği oluştur
   let userContent;
   if (hasImage) {
     userContent = [
@@ -1220,7 +1216,6 @@ async function sendMessage() {
     userContent = text;
   }
 
-  // Geçmiş + yeni mesaj
   const messages = [
     { role: 'system', content: SYSTEM_PROMPT },
     ...chatHistory,
@@ -1233,14 +1228,9 @@ async function sendMessage() {
   });
 
   try {
-    const response = await fetch(OPENROUTER_URL, {
+    const response = await fetch('/api/chat', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENROUTER_KEY}`,
-        'HTTP-Referer': 'https://checkit-beryl.vercel.app',
-        'X-Title': 'Dolandirildim Guvenlik Danismani'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'meta-llama/llama-3.3-70b-instruct:free',
         messages,
