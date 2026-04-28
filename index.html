@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Dolandırıcılık şüphesi mi yaşıyorsunuz? Risk testini yapın, AI danışmana sorun. Ücretsiz, anonim, kayıt yok.">
+<meta name="theme-color" content="#C4522A">
+<meta property="og:title" content="Dolandırıldım.com — Şüphe mi yaşıyorsunuz?">
+<meta property="og:description" content="Dolandırıcılık şüphesi anında doğru karar verin. Ücretsiz risk testi ve AI danışman.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
 <title>Dolandırıldım.com — Şüphe mi yaşıyorsunuz?</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -550,12 +556,23 @@
   }
   .msg-bubble.user .msg-image { border-color: rgba(255,255,255,0.25); }
 
-  /* ── LEGAL DISCLAIMER BANNER ── */
+  /* ── LEGAL BANNER ── */
   .legal-banner {
     background: var(--gray-100); border-top: 1px solid var(--border);
-    padding: 10px 1.5rem; font-family: var(--mono); font-size: 10px;
+    padding: 10px 1.5rem; font-family: var(--body); font-size: 10px;
     color: var(--text-faint); line-height: 1.5; text-align: center;
   }
+
+  /* ── ERİŞİLEBİLİRLİK BUTONU ── */
+  .a11y-btn {
+    position: fixed; top: 14px; right: 1rem; z-index: 200;
+    background: var(--gray-100); border: 1px solid var(--border);
+    border-radius: 8px; padding: 5px 10px;
+    font-family: var(--mono); font-size: 11px; color: var(--text-muted);
+    cursor: pointer; display: flex; align-items: center; gap: 5px;
+    line-height: 1;
+  }
+  .a11y-btn:hover { background: var(--surface); }
 
   /* ── GUIDE PAGE ── */
   .guide-page { padding-top: 56px; flex: 1; }
@@ -599,7 +616,7 @@
   }
   .nav-btn {
     display: flex; flex-direction: column; align-items: center; gap: 3px;
-    padding: 6px 20px; border-radius: 10px; border: none; background: none;
+    padding: 6px 12px; border-radius: 10px; border: none; background: none;
     cursor: pointer; color: var(--text-faint); transition: all 0.15s;
     font-family: var(--display);
   }
@@ -637,6 +654,154 @@
   }
   .site-footer a:hover { color: var(--text-muted); }
 
+  /* ── HIZLI AKSİYON MODALI ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 300;
+    background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+    display: none; align-items: flex-end; justify-content: center;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal-sheet {
+    background: var(--surface); border-radius: 24px 24px 0 0;
+    padding: 1.5rem; width: 100%; max-width: 600px;
+    animation: slideUp 0.3s ease;
+    max-height: 90vh; overflow-y: auto;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+  .modal-handle {
+    width: 40px; height: 4px; border-radius: 2px;
+    background: var(--gray-300); margin: 0 auto 1.25rem;
+  }
+  .modal-title { font-size: 18px; font-weight: 800; margin-bottom: 0.25rem; }
+  .modal-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem; font-family: var(--body); }
+  .bank-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1rem; }
+  .bank-item {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 12px; padding: 0.875rem 1rem;
+    text-decoration: none;
+  }
+  .bank-name { font-size: 14px; font-weight: 700; color: var(--text); }
+  .bank-num { font-family: var(--mono); font-size: 13px; color: var(--coral); font-weight: 500; }
+  .bank-call {
+    background: var(--safe); color: white; border: none;
+    border-radius: 8px; padding: 6px 14px;
+    font-family: var(--display); font-size: 12px; font-weight: 700;
+    cursor: pointer; white-space: nowrap;
+    text-decoration: none; display: inline-flex; align-items: center;
+  }
+  .emergency-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1rem;
+  }
+  .emergency-btn {
+    padding: 14px; border-radius: 12px; border: none;
+    font-family: var(--display); font-size: 14px; font-weight: 700;
+    cursor: pointer; text-align: center; text-decoration: none;
+    display: flex; flex-direction: column; gap: 3px; align-items: center;
+  }
+  .emergency-btn.police { background: #1A3A8F; color: white; }
+  .emergency-btn.cyber { background: var(--gray-900); color: white; }
+  .emergency-btn-num { font-size: 22px; font-weight: 800; }
+  .emergency-btn-lbl { font-size: 11px; opacity: 0.8; }
+
+  /* ── ERİŞİLEBİLİRLİK — büyük font modu ── */
+  html.font-large .question-text,
+  html.font-large .option,
+  html.font-large .msg-bubble,
+  html.font-large .action-title,
+  html.font-large .guide-item-title { font-size: 18px !important; }
+  html.font-large .hero-title { font-size: clamp(28px,6vw,46px) !important; }
+  html.font-large .hero-sub,
+  html.font-large .step-desc,
+  html.font-large .action-desc,
+  html.font-large .guide-item-desc,
+  html.font-large .msg-bubble { font-size: 16px !important; line-height: 1.7 !important; }
+
+  /* ── PAYLAŞ BUTONU ── */
+  .share-bar {
+    background: var(--gray-50); border: 1px solid var(--border);
+    border-radius: 12px; padding: 0.875rem 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 0.75rem;
+  }
+  .share-bar-text { font-size: 13px; color: var(--text-muted); font-family: var(--body); }
+  .share-bar-text strong { color: var(--text); }
+  .share-btn {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--gray-900); color: white;
+    border: none; border-radius: 8px; padding: 8px 14px;
+    font-family: var(--display); font-size: 12px; font-weight: 700;
+    cursor: pointer; white-space: nowrap;
+  }
+
+  /* ── SENARYO KARTLARI ── */
+  .scenarios-section {
+    max-width: 680px; margin: 0 auto;
+    padding: 2rem 2rem 0;
+    border-top: 1px solid var(--border);
+  }
+  .scenario-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  @media (max-width: 480px) { .scenario-grid { grid-template-columns: 1fr; } }
+  .scenario-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1rem 1.125rem;
+    cursor: pointer; transition: all 0.15s;
+    display: flex; gap: 0.75rem; align-items: flex-start;
+  }
+  .scenario-card:hover { border-color: var(--coral); background: var(--coral-light); }
+  .scenario-ico { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .scenario-title { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+  .scenario-desc { font-size: 12px; color: var(--text-muted); line-height: 1.45; font-family: var(--body); }
+  .scenario-tag {
+    display: inline-block; margin-top: 6px;
+    font-family: var(--mono); font-size: 10px;
+    background: var(--coral-light); color: var(--coral-dark);
+    border-radius: 4px; padding: 2px 6px;
+  }
+
+  /* ── HAKKIMIZDA SAYFASI ── */
+  .about-hero {
+    background: linear-gradient(135deg, var(--coral-light) 0%, var(--safe-light) 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 2rem 2rem;
+    text-align: center;
+  }
+  .about-badge {
+    display: inline-block; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 100px;
+    padding: 4px 14px; font-family: var(--mono); font-size: 11px;
+    color: var(--text-muted); margin-bottom: 1rem;
+  }
+
+  /* ── HIZLI AKSİYON FAB ── */
+  .fab-emergency {
+    position: fixed; bottom: 88px; right: 1.25rem; z-index: 150;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--coral); color: white; border: none;
+    box-shadow: 0 4px 16px rgba(196,82,42,0.4);
+    cursor: pointer; font-size: 22px;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.15s, box-shadow 0.15s;
+    animation: fabPulse 3s ease-in-out infinite;
+  }
+  .fab-emergency:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(196,82,42,0.5); }
+  @keyframes fabPulse {
+    0%,100% { box-shadow: 0 4px 16px rgba(196,82,42,0.4); }
+    50% { box-shadow: 0 4px 24px rgba(196,82,42,0.65); }
+  }
+  .fab-tooltip {
+    position: fixed; bottom: 100px; right: 5rem; z-index: 150;
+    background: var(--gray-900); color: white;
+    padding: 6px 12px; border-radius: 8px;
+    font-size: 12px; font-weight: 600; font-family: var(--display);
+    white-space: nowrap; pointer-events: none;
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .fab-emergency:hover + .fab-tooltip { opacity: 1; }
+
   /* ── MISC ── */
   .page-bottom-pad { height: 80px; }
 
@@ -654,6 +819,83 @@
   </div>
   <div class="nav-tag">Anonim · Ücretsiz</div>
 </nav>
+
+<!-- ERİŞİLEBİLİRLİK BUTONU -->
+<button class="a11y-btn" onclick="toggleFontSize()" id="a11y-btn" title="Yazı boyutunu büyüt">
+  A&nbsp;&nbsp;Büyük yazı
+</button>
+
+<!-- ACİL AKSİYON FAB -->
+<button class="fab-emergency" onclick="showEmergencyModal()" title="Acil banka numaraları">📞</button>
+<div class="fab-tooltip">Acil hatlar</div>
+
+<!-- ACİL MODAL -->
+<div class="modal-overlay" id="emergency-modal" onclick="hideEmergencyModal(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Acil Hatlar</div>
+    <div class="modal-sub">Hemen arayın — kartınızın arkasındaki numarayı da kullanabilirsiniz.</div>
+
+    <div class="emergency-row">
+      <a class="emergency-btn police" href="tel:155">
+        <span class="emergency-btn-num">155</span>
+        <span class="emergency-btn-lbl">Polis İmdat</span>
+      </a>
+      <a class="emergency-btn cyber" href="tel:156">
+        <span class="emergency-btn-num">156</span>
+        <span class="emergency-btn-lbl">Jandarma</span>
+      </a>
+    </div>
+
+    <div class="bank-list">
+      <div class="bank-item">
+        <span class="bank-name">Ziraat Bankası</span>
+        <a class="bank-call" href="tel:04442444">0444 2 444</a>
+      </div>
+      <div class="bank-item">
+        <span class="bank-name">İş Bankası</span>
+        <a class="bank-call" href="tel:04440100">0444 0 100</a>
+      </div>
+      <div class="bank-item">
+        <span class="bank-name">Garanti BBVA</span>
+        <a class="bank-call" href="tel:04440333">0444 0 333</a>
+      </div>
+      <div class="bank-item">
+        <span class="bank-name">Akbank</span>
+        <a class="bank-call" href="tel:04444455">0444 4 455</a>
+      </div>
+      <div class="bank-item">
+        <span class="bank-name">Yapı Kredi</span>
+        <a class="bank-call" href="tel:04440444">0444 0 444</a>
+      </div>
+      <div class="bank-item">
+        <span class="bank-name">Halkbank</span>
+        <a class="bank-call" href="tel:04440400">0444 0 400</a>
+      </div>
+      <div class="bank-item">
+        <span class="bank-name">VakıfBank</span>
+        <a class="bank-call" href="tel:04448724">0444 8 724</a>
+      </div>
+      <div class="bank-item">
+        <span class="bank-name">Denizbank</span>
+        <a class="bank-call" href="tel:04440800">0444 0 800</a>
+      </div>
+      <div class="bank-item">
+        <span class="bank-name">TEB</span>
+        <a class="bank-call" href="tel:04440666">0444 0 666</a>
+      </div>
+      <div class="bank-item">
+        <span class="bank-name">QNB Finansbank</span>
+        <a class="bank-call" href="tel:04440111">0444 0 111</a>
+      </div>
+    </div>
+
+    <div style="font-family:var(--mono);font-size:10px;color:var(--text-faint);text-align:center;line-height:1.6;">
+      Siber suç bildirimi: siber.pol.tr · BTK şikayet: btk.gov.tr<br>
+      <strong>Önemli:</strong> Sizi arayan kişinin verdiği numarayı aramayın.
+    </div>
+  </div>
+</div>
 
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
@@ -680,6 +922,12 @@
       <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
     </svg>
     <span class="nav-btn-label">Ne Yapmalı</span>
+  </button>
+  <button class="nav-btn" onclick="showPage('about')" id="nav-about">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+    </svg>
+    <span class="nav-btn-label">Hakkımızda</span>
   </button>
 </div>
 
@@ -757,12 +1005,52 @@
       </div>
     </div>
 
+    <!-- SENARYO KARTLARI -->
+    <div class="scenarios-section">
+      <div class="section-eyebrow" style="margin-bottom:1rem;">Tanıdık geliyor mu?</div>
+      <div class="scenario-grid">
+        <div class="scenario-card" onclick="startScenario('bank')">
+          <div class="scenario-ico">🏦</div>
+          <div>
+            <div class="scenario-title">Bankadan aradılar</div>
+            <div class="scenario-desc">"Hesabınızda şüpheli işlem var, güvenlik için bilgilerinizi doğrulayın."</div>
+            <span class="scenario-tag">Çok yaygın</span>
+          </div>
+        </div>
+        <div class="scenario-card" onclick="startScenario('police')">
+          <div class="scenario-ico">👮</div>
+          <div>
+            <div class="scenario-title">Polis veya savcı aradı</div>
+            <div class="scenario-desc">"Adınız bir soruşturmada geçiyor, para transferi yapın veya tutuklanırsınız."</div>
+            <span class="scenario-tag">Tehlikeli</span>
+          </div>
+        </div>
+        <div class="scenario-card" onclick="startScenario('sms')">
+          <div class="scenario-ico">📱</div>
+          <div>
+            <div class="scenario-title">SMS veya link geldi</div>
+            <div class="scenario-desc">"Paketiniz bekliyor, kargo ücretini ödemek için tıklayın."</div>
+            <span class="scenario-tag">Phishing</span>
+          </div>
+        </div>
+        <div class="scenario-card" onclick="startScenario('invest')">
+          <div class="scenario-ico">💰</div>
+          <div>
+            <div class="scenario-title">Yatırım fırsatı</div>
+            <div class="scenario-desc">"Kısa sürede %300 kazanç garantili sistem, hemen üye olun."</div>
+            <span class="scenario-tag">Yatırım dolandırıcılığı</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="page-bottom-pad"></div>
+    <footer class="site-footer">
+      Bu platform bilgilendirme amaçlıdır. Hukuki veya mali tavsiye niteliği taşımaz.<br>
+      <a onclick="showPage('about')">Hakkımızda</a> · <a onclick="showPage('kvkk')">Gizlilik & KVKK</a> · Acil: 155 · Siber Suç: siber.pol.tr
+    </footer>
   </div>
 </div>
-
-<!-- ═══════════════════════════════════ -->
-<!-- PAGE: TEST                          -->
 <!-- ═══════════════════════════════════ -->
 <div class="page" id="page-test">
   <div class="test-page">
@@ -791,6 +1079,7 @@
 <div class="page" id="page-result">
   <div class="result-page">
     <div class="result-inner" id="result-container"></div>
+    <div id="share-bar-container"></div>
     <div class="legal-banner" style="margin-top:auto;">
       Bu değerlendirme yalnızca bilgilendirme amaçlı bir risk göstergesidir. Kesin bir yargı veya hukuki/mali tavsiye niteliği taşımaz. Gerçek tehdit durumunda yetkili mercilere başvurunuz.
     </div>
@@ -805,16 +1094,18 @@
   <div class="chat-page">
     <div class="chat-topbar">
       <div class="chat-avatar">G</div>
-      <div>
-        <div class="chat-meta-name">Güvenlik Danışmanı</div>
+      <div style="flex:1;">
+        <div class="chat-meta-name">Güvenlik Danışmanı <span style="font-family:var(--mono);font-size:10px;color:var(--text-faint);font-weight:400;">· Yapay Zeka</span></div>
         <div class="chat-meta-status"><div class="online"></div> Aktif · Anonim · Kayıt yok</div>
       </div>
+      <button onclick="showEmergencyModal()" style="background:var(--coral);color:white;border:none;border-radius:8px;padding:6px 12px;font-family:var(--display);font-size:12px;font-weight:700;cursor:pointer;">📞 Acil</button>
     </div>
+    <div id="chat-context-banner"></div>
     <div class="messages-area" id="messages-area">
       <div class="msg-wrap">
         <div class="msg-bubble ai">
-          Merhaba. Şu an endişeli ya da baskı altında hissediyorsanız doğru yerdesiniz.<br><br>
-          Size yardımcı olabilmem için ne yaşandığını kısaca anlatır mısınız? Kim aradı, ne istedi?
+          Merhaba. Endişeli veya baskı altındaysanız doğru yerdesiniz — burada güvendesiniz.<br><br>
+          Ne yaşandığını kısaca anlatır mısınız?
         </div>
         <div class="msg-time">şimdi</div>
       </div>
@@ -947,6 +1238,77 @@
 </div>
 
 <!-- ═══════════════════════════════════ -->
+<!-- PAGE: ABOUT                         -->
+<!-- ═══════════════════════════════════ -->
+<div class="page" id="page-about">
+  <div class="guide-page" style="padding-top:56px;">
+    <div class="about-hero">
+      <div class="about-badge">Sosyal fayda platformu</div>
+      <h1 style="font-size:26px;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.75rem;">Dolandırıldım.com nedir?</h1>
+      <p style="font-size:15px;color:var(--text-muted);max-width:420px;margin:0 auto;line-height:1.65;font-family:var(--body);">
+        Dolandırıcılık şüphesi yaşayan ya da dolandırılmış kişilerin panik anında doğru karar verebilmesi için geliştirilmiş, ücretsiz bir erken uyarı platformu.
+      </p>
+    </div>
+    <div class="guide-inner">
+      <div class="guide-section">
+        <h2 class="guide-heading" style="font-size:17px;">Neden bu platform var?</h2>
+        <div style="font-size:14px;color:var(--text-muted);line-height:1.8;font-family:var(--body);">
+          <p style="margin-bottom:0.75rem;">Dolandırıcılık vakalarının büyük çoğunluğu teknik bir güvenlik açığından değil, <strong>psikolojik manipülasyondan</strong> kaynaklanır. Dolandırıcılar zaman baskısı, otorite taklidi ve izolasyon taktikleriyle insanların doğru düşünmesini engeller.</p>
+          <p>Bu platformun tek amacı: kritik anlarda kullanıcıya 30–120 saniyelik bir düşünme süresi kazandırmak. Durdurmak, düşündürmek, güvenli aksiyona yönlendirmek.</p>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h2 class="guide-heading" style="font-size:17px;">Ne yapmıyoruz?</h2>
+        <div class="guide-list">
+          <div class="guide-item">
+            <div class="guide-item-ico">🚫</div>
+            <div>
+              <div class="guide-item-title">Dolandırıcıları ifşa etmiyoruz</div>
+              <div class="guide-item-desc">Platform kişileri suçlamaz, etiketlemez veya karalama içeriği barındırmaz.</div>
+            </div>
+          </div>
+          <div class="guide-item">
+            <div class="guide-item-ico">🚫</div>
+            <div>
+              <div class="guide-item-title">Hukuki veya mali tavsiye vermiyoruz</div>
+              <div class="guide-item-desc">Tüm değerlendirmeler bilgilendirme amaçlıdır. Kesinlik iddiasında bulunmayız.</div>
+            </div>
+          </div>
+          <div class="guide-item">
+            <div class="guide-item-ico">🚫</div>
+            <div>
+              <div class="guide-item-title">Kullanıcıdan ücret almıyoruz</div>
+              <div class="guide-item-desc">Platform tamamen ücretsizdir. Mağdurdan para kazanmak etik değildir.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h2 class="guide-heading" style="font-size:17px;">Yapay zeka danışmanı hakkında</h2>
+        <div style="font-size:14px;color:var(--text-muted);line-height:1.8;font-family:var(--body);">
+          <p style="margin-bottom:0.75rem;">Danışman, Anthropic tarafından geliştirilen Claude yapay zeka modeli üzerinde çalışmaktadır. Gerçek bir insan değildir. Görüşmeler kaydedilmez veya saklanmaz.</p>
+          <p>Danışman kesin yargı vermez, olasılık ve farkındalık dili kullanır. Her yanıt bilgilendirme amaçlıdır.</p>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h2 class="guide-heading" style="font-size:17px;">Başarı kriterimiz</h2>
+        <div style="font-size:15px;font-weight:700;color:var(--text);line-height:1.6;background:var(--safe-light);border:1px solid var(--safe-border);border-radius:12px;padding:1rem 1.25rem;font-family:var(--body);">
+          "1 doğrulanmış kurtarma vakası — ürün doğrulanmış sayılır."
+        </div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:0.75rem;line-height:1.6;font-family:var(--body);">
+          Trafik veya kullanıcı sayısı değil, gerçek bir dolandırıcılık vakasının engellenmesi bizim için başarıdır.
+        </div>
+      </div>
+
+      <div class="page-bottom-pad"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
 <!-- PAGE: KVKK                          -->
 <!-- ═══════════════════════════════════ -->
 <div class="page" id="page-kvkk">
@@ -1018,6 +1380,19 @@ function showPage(id) {
   if (navEl) navEl.classList.add('active');
 
   window.scrollTo(0, 0);
+
+  // Danışmana geçişte test bağlamını enjekte et
+  if (id === 'chat' && window._testResultContext) {
+    const banner = document.getElementById('chat-context-banner');
+    if (banner) {
+      banner.innerHTML = `
+        <div style="background:var(--safe-light);border-bottom:1px solid var(--safe-border);padding:10px 1.5rem;font-size:12px;color:var(--safe);font-family:var(--body);display:flex;align-items:center;gap:8px;">
+          <span>✓</span>
+          <span>Risk testi sonucunuz danışmana iletildi — tekrar anlatmanıza gerek yok.</span>
+        </div>`;
+      window._testContext = window._testResultContext;
+    }
+  }
 }
 
 // ══════════════════════════════════════
@@ -1116,7 +1491,25 @@ function nextQuestion() {
     currentQ++;
     renderQuestion();
   } else {
+    // Bağlamı hesapla ve sakla
+    let score = 0;
+    questions.forEach((q, i) => { if (answers[i] !== null) score += q.options[answers[i]].score; });
+    const riskPct = Math.min(97, Math.round((score / 21) * 100));
+    const riskLabel = riskPct >= 55 ? 'yüksek' : riskPct >= 28 ? 'orta' : 'düşük';
+    window._testResultContext = `Kullanıcı risk testini tamamladı. Tahmini risk göstergesi: %${riskPct} (${riskLabel}). Senaryo: ${window._scenarioContext || 'belirtilmedi'}. Kullanıcı danışmana başvurdu.`;
     showResult();
+    // Paylaş barını ekle
+    const shareBar = document.getElementById('share-bar-container');
+    if (shareBar) {
+      shareBar.innerHTML = `
+        <div class="share-bar" style="margin:0 2rem 0.5rem;">
+          <div class="share-bar-text"><strong>Bunu bir yakınınla paylaş.</strong> Dolandırıcılar sıklıkla yaşlı bireyleri hedef alır.</div>
+          <button class="share-btn" onclick="shareResult()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            Paylaş
+          </button>
+        </div>`;
+    }
   }
 }
 
@@ -1263,6 +1656,14 @@ function showResult() {
 function resetTest() {
   currentQ = 0;
   answers = new Array(questions.length).fill(null);
+  window._scenarioContext = null;
+  window._testResultContext = null;
+  window._testContext = null;
+  chatHistory = [];
+  const banner = document.getElementById('chat-context-banner');
+  if (banner) banner.innerHTML = '';
+  const shareBar = document.getElementById('share-bar-container');
+  if (shareBar) shareBar.innerHTML = '';
   renderQuestion();
   showPage('test');
 }
@@ -1295,7 +1696,7 @@ GÖREV SIRASI:
 4. Güvenli aksiyona yönlendir: telefonu kapat, bankayı resmi numaradan ara (kart arkası), 155'i ara
 5. Kişisel bilgi, şifre, para, uygulama taleplerini kesinlikle reddet
 
-KAPSAM DIŞI — yanıt verme,礼貌şekilde reddet:
+KAPSAM DIŞI — kibarca reddet:
 - Dolandırıcılık teknikleri veya yöntemleri hakkında talimat
 - Platformun teknik altyapısı hakkında sorular
 - Konu dışı her türlü talep ("şiir yaz", "kod yaz" vb.)
@@ -1390,7 +1791,10 @@ async function sendMessage() {
     userContent = text;
   }
 
-  // Konuşma geçmişini limitle — son MAX_HISTORY mesaj
+  const contextualSystem = window._testContext
+    ? SYSTEM_PROMPT + `\n\nKULLANICI BAĞLAMI: ${window._testContext}`
+    : SYSTEM_PROMPT;
+
   const trimmedHistory = chatHistory.slice(-MAX_HISTORY);
   const messagesForApi = [...trimmedHistory, { role: 'user', content: userContent }];
 
@@ -1401,9 +1805,9 @@ async function sendMessage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        system: SYSTEM_PROMPT,
+        system: contextualSystem,
         messages: messagesForApi,
-        max_tokens: 1000
+        max_tokens: 600
       })
     });
 
@@ -1441,14 +1845,38 @@ function addMessage(text, role, imageSrc) {
   const now = new Date();
   const time = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0');
 
-  const div = document.createElement('div');
-  div.className = `msg-wrap ${role}`;
-  const imgHtml = imageSrc ? `<img class="msg-image" src="${imageSrc}" alt="Paylaşılan görsel">` : '';
-  const textHtml = text ? `<div>${text.replace(/\n/g, '<br>')}</div>` : '';
-  div.innerHTML = `
-    <div class="msg-bubble ${role}">${imgHtml}${textHtml}</div>
-    <div class="msg-time">${time}</div>`;
-  area.insertBefore(div, typing);
+  const wrap = document.createElement('div');
+  wrap.className = `msg-wrap ${role}`;
+
+  const bubble = document.createElement('div');
+  bubble.className = `msg-bubble ${role}`;
+
+  // Görsel — sadece güvenli data URL kabul et
+  if (imageSrc && imageSrc.startsWith('data:image/')) {
+    const img = document.createElement('img');
+    img.className = 'msg-image';
+    img.src = imageSrc;
+    img.alt = 'Paylaşılan görsel';
+    bubble.appendChild(img);
+  }
+
+  // Metin — XSS koruması: DOM API ile yaz, innerHTML kullanma
+  if (text) {
+    const p = document.createElement('div');
+    text.split('\n').forEach((line, i, arr) => {
+      p.appendChild(document.createTextNode(line));
+      if (i < arr.length - 1) p.appendChild(document.createElement('br'));
+    });
+    bubble.appendChild(p);
+  }
+
+  const timeEl = document.createElement('div');
+  timeEl.className = 'msg-time';
+  timeEl.textContent = time;
+
+  wrap.appendChild(bubble);
+  wrap.appendChild(timeEl);
+  area.insertBefore(wrap, typing);
   scrollMessages();
 }
 
@@ -1471,6 +1899,59 @@ function autoResize(el) {
 // ══════════════════════════════════════
 renderQuestion();
 
+// ══════════════════════════════════════
+// ACİL MODAL
+// ══════════════════════════════════════
+function showEmergencyModal() {
+  document.getElementById('emergency-modal').classList.add('show');
+}
+function hideEmergencyModal(e) {
+  if (e.target === document.getElementById('emergency-modal')) {
+    document.getElementById('emergency-modal').classList.remove('show');
+  }
+}
+
+// ══════════════════════════════════════
+// ERİŞİLEBİLİRLİK — büyük yazı modu
+// ══════════════════════════════════════
+let fontLarge = false;
+function toggleFontSize() {
+  fontLarge = !fontLarge;
+  document.documentElement.classList.toggle('font-large', fontLarge);
+  const btn = document.getElementById('a11y-btn');
+  btn.innerHTML = fontLarge ? 'A&nbsp;&nbsp;Küçük yazı' : 'A&nbsp;&nbsp;Büyük yazı';
+}
+
+// ══════════════════════════════════════
+// SENARYO KARTLARI
+// ══════════════════════════════════════
+const scenarioContext = {
+  bank: 'Kullanıcı bankadan arandığını, hesabında şüpheli işlem olduğu söylendiğini bildirdi.',
+  police: 'Kullanıcı kendini polis veya savcı olarak tanıtan birinden arandığını bildirdi.',
+  sms: 'Kullanıcı şüpheli bir SMS veya mesaj içindeki link aldığını bildirdi.',
+  invest: 'Kullanıcı yüksek getiri vaat eden bir yatırım teklifine muhatap olduğunu bildirdi.'
+};
+
+function startScenario(type) {
+  window._scenarioContext = scenarioContext[type] || null;
+  showPage('test');
+}
+
+// ══════════════════════════════════════
+// PAYLAŞ
+// ══════════════════════════════════════
+function shareResult() {
+  const url = window.location.href;
+  if (navigator.share) {
+    navigator.share({ title: 'Dolandırıldım.com — Risk Değerlendirmesi', url });
+  } else {
+    navigator.clipboard.writeText(url).then(() => showToast('Link kopyalandı'));
+  }
+}
+
+// ══════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════
 function showToast(msg) {
   const t = document.getElementById('success-toast');
   if (!t) return;
