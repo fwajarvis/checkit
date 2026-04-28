@@ -1,15 +1,15 @@
-// Basit in-memory rate limiter
+// Rate limiter — Vercel serverless'ta instance'lar arası paylaşılamaz.
+// Bu "best-effort" koruması sağlar: aynı instance'a gelen istekleri sınırlar.
+// Güçlü rate limiting için Vercel KV veya Upstash Redis gerekir (ileride eklenebilir).
 const rateLimitMap = new Map();
 
 function checkRateLimit(ip) {
   const now = Date.now();
   const key = ip || 'unknown';
-  const record = rateLimitMap.get(key) || { minute: [], day: [] };
+  const record = rateLimitMap.get(key) || { minute: [] };
   record.minute = record.minute.filter(t => now - t < 60_000);
-  record.day = record.day.filter(t => now - t < 86_400_000);
-  if (record.minute.length >= 3) return { blocked: true, reason: 'Dakikada en fazla 3 istek yapabilirsiniz.' };
-  if (record.day.length >= 20) return { blocked: true, reason: 'Günlük istek limitine ulaştınız. Acil durumda 155\'i arayın.' };
-  record.minute.push(now); record.day.push(now);
+  if (record.minute.length >= 5) return { blocked: true, reason: 'Çok fazla istek gönderildi. Lütfen bekleyin.' };
+  record.minute.push(now);
   rateLimitMap.set(key, record);
   return { blocked: false };
 }
