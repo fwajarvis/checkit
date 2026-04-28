@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dolandırıldım.com — Şüphe mi yaşıyorsunuz?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --coral: #D85A30;
+    --coral-dark: #993C1D;
+    --coral-light: #FAECE7;
+    --coral-border: #F0997B;
+    --green: #3B6D11;
+    --green-light: #EAF3DE;
+    --blue: #185FA5;
+    --blue-light: #E6F1FB;
+    --red-light: #FCEBEB;
+    --red: #A32D2D;
+    --gray-50: #F8F7F4;
+    --gray-100: #EEEDE8;
+    --gray-300: #C8C7C0;
+    --gray-500: #888780;
+    --gray-700: #444441;
+    --gray-900: #1A1A18;
+    --text: #1A1A18;
+    --text-muted: #6B6A65;
+    --text-faint: #A8A7A2;
+    --border: rgba(0,0,0,0.1);
+    --border-strong: rgba(0,0,0,0.18);
+    --bg: #FAFAF8;
+    --surface: #FFFFFF;
+    --mono: 'IBM Plex Mono', monospace;
+    --display: 'Syne', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--display);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── PAGES ── */
+  .page { display: none; min-height: 100vh; }
+  .page.active { display: flex; flex-direction: column; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250,250,248,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-weight: 800; font-size: 15px; letter-spacing: -0.02em;
+    color: var(--coral);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--coral);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  .nav-tag {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--text-faint);
+  }
+
+  /* ── HERO PAGE ── */
+  .hero-page {
+    padding-top: 56px;
+    flex: 1;
+  }
+  .hero-inner {
+    max-width: 680px; margin: 0 auto;
+    padding: 5rem 2rem 3rem;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+  }
+
+  .warning-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--coral-light);
+    border: 1px solid var(--coral-border);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-family: var(--mono); font-size: 11px; font-weight: 500;
+    color: var(--coral-dark); letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    animation: fadeDown 0.5s ease both;
+  }
+  .warning-badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--coral);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-title {
+    font-size: clamp(36px, 7vw, 58px);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.2rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero-title em {
+    font-style: normal;
+    color: var(--coral);
+  }
+
+  .hero-sub {
+    font-size: 17px; color: var(--text-muted);
+    line-height: 1.65; max-width: 440px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .cta-group {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--coral); color: white;
+    border: none; border-radius: 14px;
+    padding: 16px 36px;
+    font-family: var(--display); font-size: 16px; font-weight: 700;
+    cursor: pointer; letter-spacing: -0.01em;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 20px rgba(216,90,48,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(216,90,48,0.35); }
+  .btn-primary:active { transform: scale(0.98); }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: none; color: var(--text-muted);
+    border: 1px solid var(--border-strong); border-radius: 10px;
+    padding: 11px 20px;
+    font-family: var(--display); font-size: 14px; font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-secondary:hover { background: var(--surface); color: var(--text); }
+
+  .timer-note {
+    font-family: var(--mono); font-size: 11px; color: var(--text-faint);
+    margin-top: 6px;
+  }
+
+  /* ── TRUST STRIP ── */
+  .trust-strip {
+    border-top: 1px solid var(--border);
+    display: grid; grid-template-columns: repeat(3, 1fr);
+  }
+  .trust-cell {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .trust-cell:last-child { border-right: none; }
+  .trust-num {
+    font-size: 28px; font-weight: 800;
+    color: var(--coral); letter-spacing: -0.03em;
+    margin-bottom: 4px;
+  }
+  .trust-desc { font-size: 12px; color: var(--text-muted); line-height: 1.45; }
+
+  /* ── HOW IT WORKS ── */
+  .how-section {
+    max-width: 680px; margin: 0 auto;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .section-eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-faint);
+    margin-bottom: 1.5rem;
+  }
+  .steps { display: flex; flex-direction: column; gap: 1px; background: var(--border); border-radius: 16px; overflow: hidden; }
+  .step {
+    background: var(--surface);
+    padding: 1.25rem 1.5rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--gray-100);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 12px; font-weight: 500;
+    color: var(--text-muted); flex-shrink: 0; margin-top: 1px;
+  }
+  .step-num.active { background: var(--coral); color: white; }
+  .step-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+  .step-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+  /* ── TEST PAGE ── */
+  .test-page { padding-top: 56px; flex: 1; }
+  .test-inner {
+    max-width: 600px; margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+  .test-header { margin-bottom: 2rem; }
+  .test-title { font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 0.5rem; font-family: var(--mono); }
+  .progress-track {
+    height: 3px; background: var(--gray-100); border-radius: 2px;
+    margin-bottom: 2rem;
+  }
+  .progress-fill {
+    height: 3px; background: var(--coral); border-radius: 2px;
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.35s ease both;
+  }
+  .question-num {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+    color: var(--text-faint); text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .question-text {
+    font-size: 20px; font-weight: 700; line-height: 1.3;
+    letter-spacing: -0.02em; margin-bottom: 0.5rem;
+  }
+  .question-hint {
+    font-size: 13px; color: var(--text-muted); margin-bottom: 1.8rem;
+  }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option {
+    padding: 13px 16px;
+    border: 1px solid var(--border-strong);
+    border-radius: 12px; background: var(--bg);
+    font-family: var(--display); font-size: 14px; font-weight: 600;
+    cursor: pointer; text-align: left; color: var(--text);
+    transition: all 0.15s;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .option:hover { background: var(--surface); border-color: var(--coral); color: var(--coral-dark); }
+  .option.selected {
+    background: var(--coral-light); border-color: var(--coral);
+    color: var(--coral-dark);
+  }
+  .option-check {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 1.5px solid var(--gray-300);
+    flex-shrink: 0; transition: all 0.15s;
+  }
+  .option.selected .option-check {
+    background: var(--coral); border-color: var(--coral);
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3.5L4 6.5L9 1' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: center;
+  }
+
+  .test-nav { display: flex; gap: 10px; }
+  .btn-back {
+    padding: 12px 20px;
+    border: 1px solid var(--border-strong); border-radius: 10px;
+    background: none; font-family: var(--display); font-size: 14px; font-weight: 600;
+    color: var(--text-muted); cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-back:hover { background: var(--surface); color: var(--text); }
+  .btn-next {
+    flex: 1; padding: 13px;
+    background: var(--gray-900); color: white;
+    border: none; border-radius: 10px;
+    font-family: var(--display); font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: all 0.15s;
+    opacity: 0.35; pointer-events: none;
+  }
+  .btn-next.ready { opacity: 1; pointer-events: auto; }
+  .btn-next.ready:hover { background: var(--coral); }
+
+  /* ── RESULT PAGE ── */
+  .result-page { padding-top: 56px; flex: 1; }
+  .result-inner {
+    max-width: 600px; margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+
+  .risk-banner {
+    border-radius: 20px; padding: 2rem;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.4s ease both;
+  }
+  .risk-banner.high { background: var(--coral-light); border: 1px solid var(--coral-border); }
+  .risk-banner.medium { background: #FAEEDA; border: 1px solid #FAC775; }
+  .risk-banner.low { background: var(--green-light); border: 1px solid #C0DD97; }
+
+  .risk-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem; font-size: 22px;
+  }
+  .risk-banner.high .risk-icon { background: var(--coral); }
+  .risk-banner.medium .risk-icon { background: #BA7517; }
+  .risk-banner.low .risk-icon { background: #3B6D11; }
+
+  .risk-label {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .risk-banner.high .risk-label { color: var(--coral-dark); }
+  .risk-banner.medium .risk-label { color: #633806; }
+  .risk-banner.low .risk-label { color: #27500A; }
+
+  .risk-verdict { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 8px; }
+  .risk-banner.high .risk-verdict { color: var(--coral-dark); }
+  .risk-banner.medium .risk-verdict { color: #633806; }
+  .risk-banner.low .risk-verdict { color: #27500A; }
+
+  .risk-desc { font-size: 14px; line-height: 1.6; }
+  .risk-banner.high .risk-desc { color: var(--coral-dark); opacity: 0.85; }
+  .risk-banner.medium .risk-desc { color: #633806; opacity: 0.85; }
+  .risk-banner.low .risk-desc { color: #27500A; opacity: 0.85; }
+
+  .actions-title {
+    font-size: 13px; font-weight: 600; color: var(--text-muted);
+    font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+  }
+  .action-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; }
+  .action-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1rem 1.25rem;
+    display: flex; align-items: center; gap: 1rem;
+    animation: fadeUp 0.4s ease both;
+  }
+  .action-item:nth-child(2) { animation-delay: 0.05s; }
+  .action-item:nth-child(3) { animation-delay: 0.1s; }
+  .action-item:nth-child(4) { animation-delay: 0.15s; }
+  .action-ico {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 16px;
+  }
+  .action-ico.stop { background: var(--red-light); }
+  .action-ico.call { background: var(--green-light); }
+  .action-ico.chat { background: var(--blue-light); }
+  .action-ico.wait { background: var(--gray-100); }
+  .action-body { flex: 1; }
+  .action-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .action-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+  .action-btn {
+    padding: 8px 14px; border-radius: 8px;
+    background: none; border: 1px solid var(--border-strong);
+    font-family: var(--display); font-size: 12px; font-weight: 600;
+    color: var(--text-muted); cursor: pointer;
+    transition: all 0.15s; white-space: nowrap;
+  }
+  .action-btn:hover { background: var(--surface); color: var(--text); border-color: var(--gray-500); }
+  .action-btn.primary { background: var(--coral); color: white; border-color: var(--coral); }
+  .action-btn.primary:hover { background: var(--coral-dark); border-color: var(--coral-dark); }
+
+  /* ── AI CHAT PAGE ── */
+  .chat-page { padding-top: 56px; flex: 1; display: flex; flex-direction: column; }
+  .chat-topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 2rem;
+    display: flex; align-items: center; gap: 12px;
+    flex-shrink: 0;
+  }
+  .chat-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--coral);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px; color: white;
+  }
+  .chat-meta-name { font-size: 14px; font-weight: 700; }
+  .chat-meta-status {
+    font-family: var(--mono); font-size: 11px; color: var(--green);
+    display: flex; align-items: center; gap: 5px;
+  }
+  .online { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+
+  .messages-area {
+    flex: 1; overflow-y: auto;
+    padding: 1.5rem 2rem;
+    display: flex; flex-direction: column; gap: 12px;
+    max-width: 680px; width: 100%; margin: 0 auto;
+  }
+
+  .msg-wrap { display: flex; flex-direction: column; }
+  .msg-wrap.user { align-items: flex-end; }
+
+  .msg-bubble {
+    max-width: 76%; border-radius: 18px;
+    padding: 11px 16px; font-size: 14px; line-height: 1.55;
+  }
+  .msg-bubble.ai {
+    background: var(--surface); border: 1px solid var(--border);
+    border-bottom-left-radius: 4px; color: var(--text);
+  }
+  .msg-bubble.user {
+    background: var(--coral); color: white;
+    border-bottom-right-radius: 4px;
+  }
+  .msg-time {
+    font-family: var(--mono); font-size: 10px;
+    color: var(--text-faint); margin-top: 4px; padding: 0 4px;
+  }
+
+  .typing-indicator {
+    display: none; align-items: center; gap: 4px;
+    padding: 12px 16px; max-width: 72px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 18px; border-bottom-left-radius: 4px;
+  }
+  .typing-indicator.show { display: flex; }
+  .typing-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--gray-300);
+    animation: typingBounce 1.2s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-5px); }
+  }
+
+  .chat-input-bar {
+    border-top: 1px solid var(--border);
+    padding: 1rem 2rem;
+    background: var(--surface);
+    max-width: 680px; width: 100%; margin: 0 auto;
+  }
+  .chat-input-wrap {
+    display: flex; gap: 10px; align-items: flex-end;
+  }
+  .chat-textarea {
+    flex: 1; resize: none; overflow: hidden;
+    border: 1px solid var(--border-strong);
+    border-radius: 14px; padding: 11px 16px;
+    font-family: var(--display); font-size: 14px; color: var(--text);
+    background: var(--bg); outline: none; line-height: 1.5;
+    min-height: 44px; max-height: 140px;
+    transition: border-color 0.15s;
+  }
+  .chat-textarea:focus { border-color: var(--coral); }
+  .chat-send {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--coral); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; flex-shrink: 0;
+  }
+  .chat-send:hover { background: var(--coral-dark); transform: scale(1.05); }
+  .chat-send:disabled { background: var(--gray-300); cursor: default; transform: none; }
+  .chat-disclaimer {
+    font-family: var(--mono); font-size: 10px; color: var(--text-faint);
+    text-align: center; margin-top: 8px;
+  }
+
+  /* ── IMAGE UPLOAD ── */
+  .img-attach-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid var(--border-strong); background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0; transition: all 0.15s;
+    color: var(--text-muted);
+  }
+  .img-attach-btn:hover { background: var(--surface); border-color: var(--coral); color: var(--coral); }
+  #img-file-input { display: none; }
+
+  .img-preview-wrap {
+    display: none; padding: 8px 0 0;
+    position: relative; width: fit-content;
+  }
+  .img-preview-wrap.show { display: block; }
+  .img-preview {
+    max-height: 120px; max-width: 200px;
+    border-radius: 10px; border: 1px solid var(--border);
+    display: block;
+  }
+  .img-remove {
+    position: absolute; top: 12px; right: 4px;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--gray-700); color: white;
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; line-height: 1;
+  }
+
+  .msg-image {
+    max-width: 200px; border-radius: 10px;
+    display: block; margin-bottom: 6px;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .msg-bubble.user .msg-image { border-color: rgba(255,255,255,0.25); }
+
+  /* ── LEGAL DISCLAIMER BANNER ── */
+  .legal-banner {
+    background: var(--gray-100); border-top: 1px solid var(--border);
+    padding: 10px 1.5rem; font-family: var(--mono); font-size: 10px;
+    color: var(--text-faint); line-height: 1.5; text-align: center;
+  }
+
+  /* ── GUIDE PAGE ── */
+  .guide-page { padding-top: 56px; flex: 1; }
+  .guide-inner { max-width: 640px; margin: 0 auto; padding: 3rem 2rem; }
+  .guide-section { margin-bottom: 2.5rem; }
+  .guide-heading {
+    font-size: 22px; font-weight: 800; letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .guide-list { display: flex; flex-direction: column; gap: 8px; }
+  .guide-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1rem 1.25rem;
+    display: flex; gap: 0.75rem;
+  }
+  .guide-item-ico { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .guide-item-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+  .guide-item-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+  .danger-box {
+    background: var(--red-light); border: 1px solid #F7C1C1;
+    border-radius: 14px; padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .danger-title { font-size: 14px; font-weight: 700; color: var(--red); margin-bottom: 6px; }
+  .danger-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .danger-list li {
+    font-size: 13px; color: var(--red); line-height: 1.45;
+    padding-left: 1rem; position: relative;
+  }
+  .danger-list li::before { content: "—"; position: absolute; left: 0; }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: rgba(250,250,248,0.95);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: center; gap: 2px;
+    padding: 6px 1rem 10px;
+    z-index: 100;
+  }
+  .nav-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 6px 20px; border-radius: 10px; border: none; background: none;
+    cursor: pointer; color: var(--text-faint); transition: all 0.15s;
+    font-family: var(--display);
+  }
+  .nav-btn:hover { color: var(--text-muted); background: var(--gray-100); }
+  .nav-btn.active { color: var(--coral); }
+  .nav-btn svg { width: 20px; height: 20px; }
+  .nav-btn-label { font-size: 10px; font-weight: 600; letter-spacing: 0.02em; }
+
+  /* ── MISC ── */
+  .page-bottom-pad { height: 80px; }
+
+  .success-toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: var(--gray-900); color: white; padding: 10px 20px; border-radius: 100px; font-size: 13px; font-weight: 600; font-family: var(--display); opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 200; white-space: nowrap; }
+  .success-toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-dot"></div>
+    dolandırıldım.com
+  </div>
+  <div class="nav-tag">Anonim · Ücretsiz</div>
+</nav>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="nav-btn active" onclick="showPage('home')" id="nav-home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+    <span class="nav-btn-label">Ana Sayfa</span>
+  </button>
+  <button class="nav-btn" onclick="showPage('test')" id="nav-test">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+    </svg>
+    <span class="nav-btn-label">Risk Testi</span>
+  </button>
+  <button class="nav-btn" onclick="showPage('chat')" id="nav-chat">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+    </svg>
+    <span class="nav-btn-label">Danışman</span>
+  </button>
+  <button class="nav-btn" onclick="showPage('guide')" id="nav-guide">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    <span class="nav-btn-label">Ne Yapmalı</span>
+  </button>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- PAGE: HOME                          -->
+<!-- ═══════════════════════════════════ -->
+<div class="page active" id="page-home">
+  <div class="hero-page">
+    <div class="hero-inner">
+      <div class="warning-badge">
+        <div class="warning-badge-dot"></div>
+        Şüphe mi yaşıyorsunuz?
+      </div>
+      <h1 class="hero-title">
+        30 saniyede öğren.<br><em>Dolandırılıyor musun?</em>
+      </h1>
+      <p class="hero-sub">
+        Banka, polis veya devlet kurumundan aradığını söyleyen biri mi var? Para, şifre veya uygulama istiyor mu? Duraksayın. Önce bize sorun.
+      </p>
+      <div class="cta-group">
+        <button class="btn-primary" onclick="showPage('test')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          Hemen Risk Testini Başlat
+        </button>
+        <button class="btn-secondary" onclick="showPage('chat')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Durumu Danışmana Anlat
+        </button>
+        <div class="timer-note">Ortalama süre: 45 saniye · Tamamen anonim · Hiç kayıt yok</div>
+      </div>
+    </div>
+
+    <div class="trust-strip">
+      <div class="trust-cell">
+        <div class="trust-num">%83</div>
+        <div class="trust-desc">dolandırıcılık psikolojik manipülasyonla gerçekleşir, teknik zafiyet değil</div>
+      </div>
+      <div class="trust-cell">
+        <div class="trust-num">120sn</div>
+        <div class="trust-desc">doğru karar verebilmek için yeterli süre — biz bu süreyi size kazandırırız</div>
+      </div>
+      <div class="trust-cell">
+        <div class="trust-num">0₺</div>
+        <div class="trust-desc">platform tamamen ücretsiz, anonim ve mağdurdan hiçbir ücret alınmaz</div>
+      </div>
+    </div>
+
+    <div class="how-section">
+      <div class="section-eyebrow">Nasıl çalışır?</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num active">1</div>
+          <div>
+            <div class="step-title">Risk testini yap</div>
+            <div class="step-desc">5 kısa soruyla şüpheli durumu tespit ediyoruz. Zaman baskısı, otorite taklidi, izolasyon gibi klasik manipülasyon tekniklerini tarıyoruz.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num active">2</div>
+          <div>
+            <div class="step-title">Sonucunu gör</div>
+            <div class="step-desc">Risk seviyeni ve tam olarak ne yapman gerektiğini net bir şekilde açıklıyoruz. Bankanı aramaktan görüşmeyi kesmek kadar her adım burada.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num active">3</div>
+          <div>
+            <div class="step-title">Danışmana sor</div>
+            <div class="step-desc">Hâlâ emin değil misin? AI danışmanımıza durumu anlat. Seni panikteki o anın dışına çıkarıp güvenli bir karar vermene yardımcı olur.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-bottom-pad"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- PAGE: TEST                          -->
+<!-- ═══════════════════════════════════ -->
+<div class="page" id="page-test">
+  <div class="test-page">
+    <div class="test-inner">
+      <div class="test-header">
+        <div class="test-title" id="test-step-label">Soru 1 / 5</div>
+        <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:20%"></div></div>
+      </div>
+      <div id="question-container"></div>
+      <div class="test-nav">
+        <button class="btn-back" id="btn-back" onclick="prevQuestion()">← Geri</button>
+        <button class="btn-next" id="btn-next" onclick="nextQuestion()">Devam Et →</button>
+      </div>
+    </div>
+    <div class="page-bottom-pad"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- PAGE: RESULT                        -->
+<!-- ═══════════════════════════════════ -->
+<div class="page" id="page-result">
+  <div class="result-page">
+    <div class="result-inner" id="result-container"></div>
+    <div class="legal-banner" style="margin-top:auto;">
+      Bu değerlendirme yalnızca bilgilendirme amaçlı bir risk göstergesidir. Kesin bir yargı veya hukuki/mali tavsiye niteliği taşımaz. Gerçek tehdit durumunda yetkili mercilere başvurunuz.
+    </div>
+    <div class="page-bottom-pad"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- PAGE: CHAT                          -->
+<!-- ═══════════════════════════════════ -->
+<div class="page" id="page-chat">
+  <div class="chat-page">
+    <div class="chat-topbar">
+      <div class="chat-avatar">G</div>
+      <div>
+        <div class="chat-meta-name">Güvenlik Danışmanı</div>
+        <div class="chat-meta-status"><div class="online"></div> Aktif · Anonim · Kayıt yok</div>
+      </div>
+    </div>
+    <div class="messages-area" id="messages-area">
+      <div class="msg-wrap">
+        <div class="msg-bubble ai">
+          Merhaba. Şu an endişeli ya da baskı altında hissediyorsanız doğru yerdesiniz.<br><br>
+          Size yardımcı olabilmem için ne yaşandığını kısaca anlatır mısınız? Kim aradı, ne istedi?
+        </div>
+        <div class="msg-time">şimdi</div>
+      </div>
+      <div class="typing-indicator" id="typing">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      </div>
+    </div>
+    <div class="chat-input-bar">
+      <div class="img-preview-wrap" id="img-preview-wrap">
+        <img class="img-preview" id="img-preview" src="" alt="Seçilen görsel">
+        <button class="img-remove" onclick="removeImage()" title="Görseli kaldır">✕</button>
+      </div>
+      <div class="chat-input-wrap">
+        <label class="img-attach-btn" for="img-file-input" title="Mesaj ekran görüntüsü ekle">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+        </label>
+        <input type="file" id="img-file-input" accept="image/*" onchange="handleImageSelect(event)">
+        <textarea class="chat-textarea" id="chat-input" placeholder="Mesaj ekran görüntüsü ekleyin veya durumu yazın..." rows="1"
+          onkeydown="handleChatKey(event)" oninput="autoResize(this)"></textarea>
+        <button class="chat-send" id="chat-send-btn" onclick="sendMessage()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+      </div>
+      <div class="chat-disclaimer">Konuşmalar kaydedilmez · Kişisel bilgi girmeyin · Yüklenen görseller işlendikten sonra silinir</div>
+    </div>
+    <div class="legal-banner">
+      Bu platform yalnızca bilgilendirme ve farkındalık amaçlıdır. Buradaki değerlendirmeler hukuki veya mali tavsiye niteliği taşımaz, herhangi bir konuda kesinlik iddiasında bulunmaz.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- PAGE: GUIDE                         -->
+<!-- ═══════════════════════════════════ -->
+<div class="page" id="page-guide">
+  <div class="guide-page">
+    <div class="guide-inner">
+      <h1 style="font-size:28px;font-weight:800;letter-spacing:-0.03em;margin-bottom:0.4rem;">Ne Yapmalıyım?</h1>
+      <p style="color:var(--text-muted);font-size:14px;margin-bottom:2rem;">Dolandırıcılık şüphesi anında adım adım rehber.</p>
+
+      <div class="danger-box">
+        <div class="danger-title">🚫 Bunları kesinlikle yapmayın</div>
+        <ul class="danger-list">
+          <li>Para transferi veya EFT yapmayın</li>
+          <li>QR kod okutmayın, uygulama indirmeyin</li>
+          <li>Şifre, SMS kodu veya PIN paylaşmayın</li>
+          <li>Kimlik, pasaport veya fatura fotoğrafı göndermeyin</li>
+          <li>Karşı tarafın söylediği numarayı aramayın — her zaman kartın arkasındaki resmi numarayı kullanın</li>
+        </ul>
+      </div>
+
+      <div class="guide-section">
+        <h2 class="guide-heading">Hemen yapmanız gerekenler</h2>
+        <div class="guide-list">
+          <div class="guide-item">
+            <div class="guide-item-ico">📵</div>
+            <div>
+              <div class="guide-item-title">Görüşmeyi kapatın</div>
+              <div class="guide-item-desc">Telefonu kapatmak her zaman güvenlidir. Gerçek banka veya devlet kurumları sizi asla aceleye getirmez, acil karar almaya zorlamaz.</div>
+            </div>
+          </div>
+          <div class="guide-item">
+            <div class="guide-item-ico">🏦</div>
+            <div>
+              <div class="guide-item-title">Bankayı resmi numaradan arayın</div>
+              <div class="guide-item-desc">Banka kartınızın arkasındaki numarayı veya bankanın resmi web sitesindeki numarayı kullanın. Arayan kişinin söylediği numarayı aramayın.</div>
+            </div>
+          </div>
+          <div class="guide-item">
+            <div class="guide-item-ico">👥</div>
+            <div>
+              <div class="guide-item-title">Güvendiğiniz biriyle konuşun</div>
+              <div class="guide-item-desc">Bir aile üyeniz veya arkadaşınızla konuşun. Dolandırıcılar sizi kasıtlı olarak izole etmeye çalışır — bu bir uyarı işareti.</div>
+            </div>
+          </div>
+          <div class="guide-item">
+            <div class="guide-item-ico">🚔</div>
+            <div>
+              <div class="guide-item-title">Şikayet edin</div>
+              <div class="guide-item-desc">Emniyet: 155 · Jandarma: 156 · Siber Suçlar: siber.pol.tr · BTK Şikayet: btk.gov.tr — Başvuru yapmak hem sizi korur hem başkalarını uyarır.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h2 class="guide-heading">Klasik dolandırıcılık yöntemleri</h2>
+        <div class="guide-list">
+          <div class="guide-item">
+            <div class="guide-item-ico">⏰</div>
+            <div>
+              <div class="guide-item-title">Zaman baskısı</div>
+              <div class="guide-item-desc">"Hemen yapmazsan hesabın bloke olur." Gerçek kurumlar acele ettirmez. Bu baskı manipülasyon taktiğidir.</div>
+            </div>
+          </div>
+          <div class="guide-item">
+            <div class="guide-item-ico">👮</div>
+            <div>
+              <div class="guide-item-title">Otorite taklidi</div>
+              <div class="guide-item-desc">Banka, savcı, polis veya devlet kurumu kimliğine bürünme. Arayan numaranın sahte görünebileceğini bilin (caller ID spoofing).</div>
+            </div>
+          </div>
+          <div class="guide-item">
+            <div class="guide-item-ico">🤫</div>
+            <div>
+              <div class="guide-item-title">İzolasyon talebi</div>
+              <div class="guide-item-desc">"Bunu kimseye söyleme, soruşturma gizli." Bu cümleyi duyan anda kapatın. Gerçek hiçbir kurum bunu söylemez.</div>
+            </div>
+          </div>
+          <div class="guide-item">
+            <div class="guide-item-ico">😱</div>
+            <div>
+              <div class="guide-item-title">Panik oluşturma</div>
+              <div class="guide-item-desc">"Hesabınız ele geçirildi, suçlu olarak görünüyorsunuz." Korku altında alınan kararlar yanlış olur. Duraksayın.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-bottom-pad"></div>
+    </div>
+  </div>
+</div>
+
+
+<div class="success-toast" id="success-toast">✓ Bildirim alındı, teşekkürler</div>
+
+<script>
+// ══════════════════════════════════════
+// PAGE ROUTER
+// ══════════════════════════════════════
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+  const targetId = id === 'result' ? 'page-result' : `page-${id}`;
+  const el = document.getElementById(targetId);
+  if (el) el.classList.add('active');
+
+  const navId = id === 'result' ? 'nav-test' : `nav-${id}`;
+  const navEl = document.getElementById(navId);
+  if (navEl) navEl.classList.add('active');
+
+  window.scrollTo(0, 0);
+}
+
+// ══════════════════════════════════════
+// RISK TEST LOGIC
+// ══════════════════════════════════════
+const questions = [
+  {
+    text: "Sizi arayan kişi kendini banka, polis, savcı veya devlet kurumundan biri olarak mı tanıttı?",
+    hint: "Arayan numara resmi görünse bile bu doğrulanamaz.",
+    options: [
+      { label: "Evet, banka veya mali kurum dedi", score: 3 },
+      { label: "Evet, polis / savcı / mahkeme dedi", score: 4 },
+      { label: "Evet, başka bir kurum dedi", score: 2 },
+      { label: "Hayır, öyle bir şey söylemedi", score: 0 }
+    ]
+  },
+  {
+    text: "Görüşme sırasında sizi aceleye getirdiler mi ya da 'hemen yapmazsan' gibi bir baskı hissettiniz mi?",
+    hint: "Zaman baskısı en yaygın manipülasyon tekniğidir.",
+    options: [
+      { label: "Evet, çok acele ettiriliyorum", score: 4 },
+      { label: "Biraz baskı var", score: 2 },
+      { label: "Hayır, sakin bir görüşme", score: 0 }
+    ]
+  },
+  {
+    text: "Sizi bu görüşmeyi başka biriyle paylaşmamaya ya da gizli tutmaya teşvik ettiler mi?",
+    hint: "Gerçek hiçbir kurum bunu istemez.",
+    options: [
+      { label: "Evet, 'kimseye söyleme' dedi", score: 5 },
+      { label: "Doğrudan söylemedi ama ima etti", score: 3 },
+      { label: "Hayır, böyle bir şey söylemedi", score: 0 }
+    ]
+  },
+  {
+    text: "Para transferi, QR kod okutma, uygulama indirme veya şifre/SMS kodu paylaşma talep edildi mi?",
+    hint: "Bu taleplerin hiçbiri meşru bir kurumdan gelmez.",
+    options: [
+      { label: "Evet, para veya transfer istedi", score: 5 },
+      { label: "Evet, uygulama veya kod istedi", score: 5 },
+      { label: "Henüz istemedi ama yönlendiriyor", score: 3 },
+      { label: "Hayır, bu tür bir talep olmadı", score: 0 }
+    ]
+  },
+  {
+    text: "Bu görüşme öncesinde böyle bir şeyin geleceğini bilmiyordunuz, değil mi? Beklenmedik bir aramayı mı alıyorsunuz?",
+    hint: "Önceden randevu almadan yapılan acil aramalar çok şüphelidir.",
+    options: [
+      { label: "Evet, tamamen beklenmedik bir arama", score: 3 },
+      { label: "Bir bağlantı var ama emin değilim", score: 1 },
+      { label: "Hayır, beklendiğim bir aramadı bu", score: 0 }
+    ]
+  }
+];
+
+let currentQ = 0;
+let answers = new Array(questions.length).fill(null);
+
+function renderQuestion() {
+  const q = questions[currentQ];
+  const pct = ((currentQ + 1) / questions.length) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('test-step-label').textContent = `Soru ${currentQ + 1} / ${questions.length}`;
+
+  const selected = answers[currentQ];
+  const html = `
+    <div class="question-card">
+      <div class="question-num">Soru ${currentQ + 1}</div>
+      <div class="question-text">${q.text}</div>
+      <div class="question-hint">${q.hint}</div>
+      <div class="options">
+        ${q.options.map((o, i) => `
+          <button class="option ${selected === i ? 'selected' : ''}" onclick="selectOption(${i})">
+            ${o.label}
+            <div class="option-check"></div>
+          </button>
+        `).join('')}
+      </div>
+    </div>`;
+  document.getElementById('question-container').innerHTML = html;
+
+  document.getElementById('btn-back').style.display = currentQ === 0 ? 'none' : 'block';
+  const nextBtn = document.getElementById('btn-next');
+  nextBtn.textContent = currentQ === questions.length - 1 ? 'Sonucu Gör →' : 'Devam Et →';
+  nextBtn.classList.toggle('ready', selected !== null);
+}
+
+function selectOption(i) {
+  answers[currentQ] = i;
+  renderQuestion();
+}
+
+function nextQuestion() {
+  if (answers[currentQ] === null) return;
+  if (currentQ < questions.length - 1) {
+    currentQ++;
+    renderQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function prevQuestion() {
+  if (currentQ > 0) { currentQ--; renderQuestion(); }
+}
+
+function showResult() {
+  let score = 0;
+  const maxScore = 21; // max possible
+  questions.forEach((q, i) => {
+    if (answers[i] !== null) score += q.options[answers[i]].score;
+  });
+
+  // Risk percentage: map score 0-21 to 0-100, cap at 97
+  const riskPct = Math.min(97, Math.round((score / maxScore) * 100));
+
+  let level, title, desc, color, pctColor;
+  if (riskPct >= 55) {
+    level = 'high'; color = 'high'; pctColor = 'var(--coral-dark)';
+    title = 'Yüksek riskli bir tablo görünüyor.';
+    desc = `Paylaştığınız bilgiler, dolandırıcılık girişimlerinde sıkça karşılaşılan örüntülerle örtüşüyor. Bu bir kesinlik değil; ancak <strong>dikkatli olmanızı ve aşağıdaki adımları değerlendirmenizi öneririz.</strong>`;
+  } else if (riskPct >= 28) {
+    level = 'medium'; color = 'medium'; pctColor = '#633806';
+    title = 'Bazı dikkat çekici işaretler var.';
+    desc = `Durumunuzda dikkat çeken birkaç faktör tespit ettik. Kesin bir değerlendirme yapamayız; ancak <strong>herhangi bir adım atmadan önce duraksayıp doğrulamanızı öneririz.</strong>`;
+  } else {
+    level = 'low'; color = 'low'; pctColor = '#27500A';
+    title = 'Belirgin bir risk işareti görünmüyor.';
+    desc = `Bu görüşmede yaygın risk faktörlerinin büyük bölümü tespit edilmedi. Yine de herhangi bir şey sizi rahatsız ettiyse danışmana sorabilirsiniz — bu bir garanti değildir.`;
+  }
+
+  // Risk gauge visual
+  const gaugeHtml = `
+    <div style="margin:1rem 0 0.5rem;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">
+        <span style="font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:${pctColor};">Tahmini Risk Göstergesi</span>
+        <span style="font-size:26px;font-weight:800;color:${pctColor};letter-spacing:-0.03em;">%${riskPct}</span>
+      </div>
+      <div style="height:6px;background:rgba(0,0,0,0.08);border-radius:4px;overflow:hidden;">
+        <div style="height:6px;width:${riskPct}%;background:${riskPct>=55?'var(--coral)':riskPct>=28?'#BA7517':'#3B6D11'};border-radius:4px;transition:width 0.8s cubic-bezier(0.4,0,0.2,1);"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:${pctColor};opacity:0.6;margin-top:4px;">
+        <span>Düşük</span><span>Orta</span><span>Yüksek</span>
+      </div>
+    </div>`;
+
+  const actionsHigh = `
+    <div class="action-item">
+      <div class="action-ico stop">📵</div>
+      <div class="action-body">
+        <div class="action-title">Görüşmeyi hemen kapatın</div>
+        <div class="action-desc">Telefonu kapatmak her zaman güvenlidir. Tekrar aramaları reddedin.</div>
+      </div>
+      <button class="action-btn primary" style="background:var(--red);border-color:var(--red);">Anladım</button>
+    </div>
+    <div class="action-item">
+      <div class="action-ico call">🏦</div>
+      <div class="action-body">
+        <div class="action-title">Bankanızı resmi numaradan arayın</div>
+        <div class="action-desc">Kartınızın arkasındaki veya bankanın resmi sitesindeki numarayı kullanın.</div>
+      </div>
+    </div>
+    <div class="action-item">
+      <div class="action-ico chat">💬</div>
+      <div class="action-body">
+        <div class="action-title">AI Danışmanla konuşun</div>
+        <div class="action-desc">Durumu daha ayrıntılı anlatmak ve yönlendirme almak için.</div>
+      </div>
+      <button class="action-btn primary" onclick="showPage('chat')">Git →</button>
+    </div>`;
+
+  const actionsMedium = `
+    <div class="action-item">
+      <div class="action-ico wait">⏸️</div>
+      <div class="action-body">
+        <div class="action-title">Hiçbir işlem yapmadan durun</div>
+        <div class="action-desc">Para, şifre veya uygulama talepleri varsa bunları kesinlikle yapmayın.</div>
+      </div>
+    </div>
+    <div class="action-item">
+      <div class="action-ico call">🏦</div>
+      <div class="action-body">
+        <div class="action-title">Kurumu resmi kanaldan doğrulayın</div>
+        <div class="action-desc">Arayan kişinin söylediği numarayı değil, resmi kanalları kullanın.</div>
+      </div>
+    </div>
+    <div class="action-item">
+      <div class="action-ico chat">💬</div>
+      <div class="action-body">
+        <div class="action-title">Danışmana sorun</div>
+        <div class="action-desc">Emin değilseniz AI danışmanımıza durumu aktarın.</div>
+      </div>
+      <button class="action-btn primary" onclick="showPage('chat')">Git →</button>
+    </div>`;
+
+  const actionsLow = `
+    <div class="action-item">
+      <div class="action-ico wait">✅</div>
+      <div class="action-body">
+        <div class="action-title">Yine de dikkatli olun</div>
+        <div class="action-desc">Şifre, para veya kişisel bilgi paylaşımında her zaman temkinli davranın.</div>
+      </div>
+    </div>
+    <div class="action-item">
+      <div class="action-ico chat">💬</div>
+      <div class="action-body">
+        <div class="action-title">Hâlâ şüphe mi var?</div>
+        <div class="action-desc">Danışmana durumu anlatın, birlikte değerlendirelim.</div>
+      </div>
+      <button class="action-btn primary" onclick="showPage('chat')">Danışmana Sor</button>
+    </div>`;
+
+  const actions = riskPct >= 55 ? actionsHigh : (riskPct >= 28 ? actionsMedium : actionsLow);
+  const icon = riskPct >= 55 ? '⚠️' : (riskPct >= 28 ? '⚡' : '✓');
+
+  document.getElementById('result-container').innerHTML = `
+    <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-faint);margin-bottom:1rem;">Değerlendirme tamamlandı · Bu bir öneridir</div>
+    <div class="risk-banner ${color}">
+      <div class="risk-icon" style="font-size:22px;">${icon}</div>
+      ${gaugeHtml}
+      <div class="risk-verdict" style="margin-top:0.75rem;">${title}</div>
+      <div class="risk-desc">${desc}</div>
+    </div>
+    <div class="actions-title">Önerilen adımlar</div>
+    <div class="action-list">${actions}</div>
+    <button class="btn-secondary" style="width:100%;justify-content:center;margin-top:0.5rem;"
+      onclick="resetTest()">← Testi Yeniden Yap</button>`;
+
+  showPage('result');
+}
+
+function resetTest() {
+  currentQ = 0;
+  answers = new Array(questions.length).fill(null);
+  renderQuestion();
+  showPage('test');
+}
+
+// ══════════════════════════════════════
+// CHAT / AI LOGIC
+// ══════════════════════════════════════
+const SYSTEM_PROMPT = `Sen "Güvenlik Danışmanı" adıyla çalışan, dolandırıcılık şüphesi yaşayan insanlara yardım eden bir bilgilendirme asistanısın.
+
+TEMEL KURALLAR — hiçbir zaman ihlal etme:
+1. KESİN İFADE KULLANMA. "Bu bir dolandırıcılık" demek yerine "bu durum dolandırıcılık girişimlerindeki örüntülerle örtüşüyor", "risk taşıyor olabilir", "dikkat çekici bir tablo" gibi ihtimale dayalı dil kullan.
+2. HUKUKİ / MALİ TAVSİYE VERME. "Şunu yapmalısın" yerine "şunu değerlendirmenizi öneririz", "bu konuda yetkili mercilere danışmanız faydalı olabilir" de.
+3. TANINIRLIK İDDİASINDA BULUNMA. Bir mesaj veya görsel gönderilirse "Bu kesinlikle dolandırıcılık mesajı" deme, "bu mesaj dolandırıcılık girişimlerinde yaygın kullanılan kalıplarla benzerlik taşıyor" de.
+4. Sorumluluk reddi: Her yanıtın sonunda çok kısa bir not ekle: "(Bu yanıt bilgilendirme amaçlıdır, kesinlik iddiası taşımaz.)"
+
+GÖREV:
+- Kullanıcıyı panikten çıkarmak, sakinleştirmek
+- Durumu anlamak için nazikçe sorular sormak
+- Risk faktörlerini açıklamak — kesin yargı değil, farkındalık
+- Para, şifre veya kişisel bilgi paylaşımına karşı uyarmak
+- Bankayı aramak, görüşmeyi kesmek, 155'i aramak gibi güvenli aksiyonlara yönlendirmek
+- Görsel gönderilirse: içeriği analiz et, şüpheli unsurları belirt, ama "dolandırıcılık" etiketi yapıştırma
+
+TON: Sakin, empatik, net. Kısa cümleler. Türkçe. Kimseyi suçlama veya yargılama.`;
+
+let pendingImageBase64 = null;
+let pendingImageType = null;
+
+function handleImageSelect(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const dataUrl = e.target.result;
+    pendingImageBase64 = dataUrl.split(',')[1];
+    pendingImageType = file.type;
+    document.getElementById('img-preview').src = dataUrl;
+    document.getElementById('img-preview-wrap').classList.add('show');
+  };
+  reader.readAsDataURL(file);
+  event.target.value = '';
+}
+
+function removeImage() {
+  pendingImageBase64 = null;
+  pendingImageType = null;
+  document.getElementById('img-preview-wrap').classList.remove('show');
+  document.getElementById('img-preview').src = '';
+}
+
+let chatHistory = [];
+
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text && !pendingImageBase64) return;
+
+  const hasImage = !!pendingImageBase64;
+  const imgB64 = pendingImageBase64;
+  const imgType = pendingImageType;
+  const imgSrc = hasImage ? document.getElementById('img-preview').src : null;
+
+  addMessage(text, 'user', hasImage ? imgSrc : null);
+  input.value = '';
+  autoResize(input);
+  removeImage();
+  document.getElementById('chat-send-btn').disabled = true;
+
+  const typing = document.getElementById('typing');
+  typing.classList.add('show');
+  scrollMessages();
+
+  let userContent;
+  if (hasImage) {
+    userContent = [
+      { type: 'image', source: { type: 'base64', media_type: imgType, data: imgB64 } }
+    ];
+    if (text) userContent.push({ type: 'text', text });
+    else userContent.push({ type: 'text', text: 'Bu mesajı/görseli incelemenizi istiyorum. Risk değerlendirmesi yapar mısınız?' });
+  } else {
+    userContent = text;
+  }
+
+  chatHistory.push({ role: 'user', content: userContent });
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: chatHistory
+      })
+    });
+
+    const data = await response.json();
+    const reply = data.content?.[0]?.text || 'Şu an yanıt veremiyorum, lütfen tekrar deneyin.';
+    const histEntry = hasImage
+      ? { role: 'user', content: text ? `[Görsel paylaşıldı] ${text}` : '[Görsel paylaşıldı — inceleme istendi]' }
+      : { role: 'user', content: text };
+    chatHistory[chatHistory.length - 1] = histEntry;
+
+    chatHistory.push({ role: 'assistant', content: reply });
+    typing.classList.remove('show');
+    addMessage(reply, 'ai');
+  } catch (e) {
+    typing.classList.remove('show');
+    addMessage('Bağlantı hatası. Lütfen internet bağlantınızı kontrol edip tekrar deneyin. Acil durumda bankanızı veya 155\'i arayın.', 'ai');
+  }
+
+  document.getElementById('chat-send-btn').disabled = false;
+}
+
+function addMessage(text, role, imageSrc) {
+  const area = document.getElementById('messages-area');
+  const typing = document.getElementById('typing');
+  const now = new Date();
+  const time = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0');
+
+  const div = document.createElement('div');
+  div.className = `msg-wrap ${role}`;
+  const imgHtml = imageSrc ? `<img class="msg-image" src="${imageSrc}" alt="Paylaşılan görsel">` : '';
+  const textHtml = text ? `<div>${text.replace(/\n/g, '<br>')}</div>` : '';
+  div.innerHTML = `
+    <div class="msg-bubble ${role}">${imgHtml}${textHtml}</div>
+    <div class="msg-time">${time}</div>`;
+  area.insertBefore(div, typing);
+  scrollMessages();
+}
+
+function scrollMessages() {
+  const area = document.getElementById('messages-area');
+  area.scrollTop = area.scrollHeight;
+}
+
+function handleChatKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 140) + 'px';
+}
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+renderQuestion();
+
+function showToast(msg) {
+  const t = document.getElementById('success-toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
